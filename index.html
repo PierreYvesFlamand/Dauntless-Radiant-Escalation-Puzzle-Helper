@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dauntless Radiant Escalation Puzzle Helper</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        #glyphBtns {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+        }
+
+        .glyphBtn {
+            background-color: black;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .resultZone {
+            display: flex;
+            align-items: center;
+            margin-top: 2rem;
+            height: 3rem;
+        }
+
+        #glyphResult {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 45vw;
+            margin: 0 auto;
+        }
+
+        #undo,
+        #clear {
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="glyphBtns"></div>
+
+    <div class="resultZone">
+        <div id="glyphResult"></div>
+        <button id="undo">Undo</button>
+        <button id="clear">Clear</button>
+    </div>
+
+    <script>
+        const glyphBtns = document.querySelector('#glyphBtns');
+        const glyphResult = document.querySelector('#glyphResult');
+        const undoBtn = document.querySelector('#undo');
+        const clearBtn = document.querySelector('#clear');
+
+        [1, 2, 3, 4, 5, 6].forEach(i => {
+            const button = document.createElement('button');
+            button.classList.add('glyphBtn');
+            button.addEventListener('click', () => {
+                if (glyphResult.children.length >= 4) return;
+
+                const img = document.createElement('img');
+                img.src = `imgages/Glyph_${i}.png`;
+                glyphResult.appendChild(img);
+            });
+
+            const img = document.createElement('img');
+            img.src = `imgages/Glyph_${i}.png`;
+
+            button.appendChild(img);
+            glyphBtns.appendChild(button);
+
+        });
+
+        undoBtn.addEventListener('click', () => {
+            if (glyphResult.children.length === 0) return;
+            glyphResult.children[glyphResult.children.length - 1].remove();
+        });
+
+        clearBtn.addEventListener('click', () => {
+            glyphResult.innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>
